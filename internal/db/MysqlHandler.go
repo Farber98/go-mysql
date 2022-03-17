@@ -2,7 +2,10 @@ package db
 
 import (
 	"database/sql"
+	"encoding/json"
+	"errors"
 	"fmt"
+	"log"
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -23,4 +26,31 @@ func InitDb(user string, password string, host string, dbName string, maxOpenCon
 	conn.SetConnMaxLifetime(time.Duration(connMaxTTL) * time.Second)
 	conn.SetMaxIdleConns(maxIddleConns)
 	return &MySQLHandler{conn}, nil
+}
+
+func (h *MySQLHandler) CallSP(sp string, obj interface{}) (*[]byte, error) {
+	input, err := json.Marshal(obj)
+	if err != nil {
+		return nil, err
+	}
+	var output *[]byte
+	startTime := time.Now()
+	if obj != nil {
+		query := fmt.Sprintf("CALL %s (?)", sp)
+		err = h.Conn.QueryRow(query, string(input)).Scan(&output)
+	} else {
+		query := fmt.Sprintf("CALL %s (?)", sp)
+		err = h.Conn.QueryRow(query).Scan(&output)
+	}
+	called := fmt.Sprintf("CALL %s ('%s'); (%s)", sp, string(input), time.Since(startTime))
+	log.Println("[mysql]" + called)
+
+	if err == sql.ErrNoRows {
+		return nil, nil
+	}
+
+	if err != nil {
+		return nil, errors.New(called + " " + err.Error())
+	}
+	return output, nil
 }
