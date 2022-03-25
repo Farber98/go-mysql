@@ -39,7 +39,7 @@ func (h *MySQLHandler) CallSP(sp string, obj interface{}) (*[]byte, error) {
 		query := fmt.Sprintf("CALL %s (?)", sp)
 		err = h.Conn.QueryRow(query, string(input)).Scan(&output)
 	} else {
-		query := fmt.Sprintf("CALL %s (?)", sp)
+		query := fmt.Sprintf("CALL %s ()", sp)
 		err = h.Conn.QueryRow(query).Scan(&output)
 	}
 	called := fmt.Sprintf("CALL %s ('%s'); (%s)", sp, string(input), time.Since(startTime))

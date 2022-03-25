@@ -1,16 +1,15 @@
 package main
 
 import (
-	"go-mysql/internal/config"
+	"fmt"
 	"go-mysql/internal/db"
 	"log"
-	"net/http"
 )
 
 func main() {
 	log.SetFlags(log.Ltime | log.Lshortfile)
 	configPath := "../cfg.toml"
-	conf, err := config.InitConfig(configPath)
+	conf, err := initConfig(configPath)
 	if err != nil {
 		log.Panic("Config file error.")
 	}
@@ -22,5 +21,8 @@ func main() {
 	if err := db.Conn.Ping(); err != nil {
 		log.Println("Ping error.")
 	}
-	http.ListenAndServe(":1234", nil)
+	fmt.Println(conf)
+	r := initRouter(db)
+	r.Logger.Fatal(r.Start(conf.Server.Listen))
+
 }

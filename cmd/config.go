@@ -1,4 +1,4 @@
-package config
+package main
 
 import (
 	"errors"
@@ -8,6 +8,9 @@ import (
 )
 
 type config struct {
+	Server struct {
+		Listen string
+	}
 	Database struct {
 		User        string
 		Password    string
@@ -19,7 +22,7 @@ type config struct {
 	}
 }
 
-func InitConfig(configPath string) (*config, error) {
+func initConfig(configPath string) (*config, error) {
 	if _, err := os.Stat(configPath); os.IsNotExist(err) {
 		return nil, errors.New("config file does not exist")
 	} else if err != nil {
