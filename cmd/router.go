@@ -8,9 +8,9 @@ import (
 	"github.com/labstack/echo/middleware"
 )
 
-func initRouter(h *db.MySQLHandler) *echo.Echo {
+func initRouter(db *db.MySQLHandler) *echo.Echo {
 	r := echo.New()
-	initRoutes(r, h)
+	initRoutes(r, db)
 
 	/* MIDDLEWARES */
 	r.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
@@ -19,7 +19,10 @@ func initRouter(h *db.MySQLHandler) *echo.Echo {
 	return r
 }
 
-func initRoutes(r *echo.Echo, h *db.MySQLHandler) {
+func initRoutes(r *echo.Echo, db *db.MySQLHandler) {
 
 	r.GET("/test", controllers.Prueba)
+
+	cuadrosController := &controllers.CuadrosController{Db: db}
+	r.GET("/cuadros/estado/:id", cuadrosController.EstadoCuadros)
 }
