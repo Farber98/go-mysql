@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"go-mysql/internal/db"
 	"log"
 )
@@ -21,7 +20,6 @@ func main() {
 	if err := db.Conn.Ping(); err != nil {
 		log.Println("Ping error.")
 	}
-	fmt.Println(conf)
 	r := initRouter(db)
 	r.Logger.Fatal(r.Start(conf.Server.Listen))
 

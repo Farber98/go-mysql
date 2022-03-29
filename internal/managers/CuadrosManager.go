@@ -16,10 +16,13 @@ func (manager *CuadrosManager) EstadoCuadros(IDPintor int) (*structs.CuadrosEsta
 	}{IDPintor: IDPintor}
 
 	out, err := manager.Db.CallSP("sp_cuadros_estado", objeto)
-	if out == nil || err != nil {
+	if err != nil {
 		return nil, err
 	}
 
+	if out == nil {
+		return nil, nil
+	}
 	cuadros := structs.CuadrosEstado{}
 	if err := json.Unmarshal(*out, &cuadros); err != nil {
 		return nil, err

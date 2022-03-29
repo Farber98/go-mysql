@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"go-mysql/internal/structs"
 	"log"
 	"time"
 
@@ -52,5 +53,24 @@ func (h *MySQLHandler) CallSP(sp string, obj interface{}) (*[]byte, error) {
 	if err != nil {
 		return nil, errors.New(called + " " + err.Error())
 	}
-	return output, nil
+
+	var respuestaMySQL structs.ResponseMySQL
+
+	err = json.Unmarshal(*output, &respuestaMySQL)
+	if err != nil {
+		return nil, err
+	}
+
+	if respuestaMySQL.Error != nil {
+		return nil, errors.New(*(respuestaMySQL.Error))
+	}
+
+	b, err := json.Marshal(respuestaMySQL.Respuesta)
+
+	if err != nil {
+		return nil, err
+
+	}
+	return &b, nil
+
 }

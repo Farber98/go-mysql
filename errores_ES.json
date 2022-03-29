@@ -1,0 +1,5 @@
+{
+    "ERROR_PINTOR_OBLIGATORIO": "El ID del pintor es obligatorio.",
+    "ERROR_PINTOR_INEXISTENTE": "El pintor no existe.",
+    "ERROR_DEFAULT": "Ha ocurrido un error mientras se procesaba su petición."
+}
