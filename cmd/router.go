@@ -25,4 +25,5 @@ func initRoutes(r *echo.Echo, db *db.MySQLHandler) {
 
 	cuadrosController := &controllers.CuadrosController{Db: db}
 	r.GET("/cuadros/estado/:id", cuadrosController.EstadoCuadros)
+	r.POST("/cuadros/baja", cuadrosController.DarBaja)
 }

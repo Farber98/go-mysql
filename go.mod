@@ -6,6 +6,7 @@ require (
 	github.com/BurntSushi/toml v1.0.0
 	github.com/go-sql-driver/mysql v1.6.0
 	github.com/labstack/echo v3.3.10+incompatible
+	github.com/mitchellh/mapstructure v1.4.3
 )
 
 require (

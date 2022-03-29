@@ -12,6 +12,12 @@ type Response struct {
 	Respuesta interface{}      `json:"respuesta"`
 }
 
+func (r *Response) AddModels(elements ...interface{}) *Response {
+	res := helpers.GenerateJSONFromModels(elements...)
+	r.Respuesta = res
+	return r
+}
+
 func GenerarRespuestaError(err error, code int) *echo.HTTPError {
 	codigo, mensaje := helpers.GetError(err)
 	objError := structs.Errores{

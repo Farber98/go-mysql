@@ -1,5 +1,8 @@
 {
     "ERROR_PINTOR_OBLIGATORIO": "El ID del pintor es obligatorio.",
     "ERROR_PINTOR_INEXISTENTE": "El pintor no existe.",
-    "ERROR_DEFAULT": "Ha ocurrido un error mientras se procesaba su petición."
+    "ERROR_CUADRO_INEXISTENTE": "El cuadro no existe.",
+    "ERROR_CUADRO_ESTA_BAJA": "El cuadro ya está dado de baja.",
+    "ERROR_DEFAULT": "Ha ocurrido un error mientras se procesaba su petición.",
+    "ERROR_TRANSACCION": "Error en la transacción. Contáctese con el administrador"
 }

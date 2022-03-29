@@ -8,3 +8,13 @@ type CuadrosEstado []struct {
 	IDCuadro  int     `json:"IDCuadro"`
 	Propuesta float64 `json:"Propuesta"`
 }
+
+type Cuadros struct {
+	IDCuadro int
+	IDPintor int
+	IDMetodo int
+	Titulo   string
+	Fecha    string
+	Precio   float64
+	Estado   string
+}
