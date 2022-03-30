@@ -1,0 +1,42 @@
+openapi: 3.0.0
+servers: 
+- url: http://localhost:1323
+info: 
+  version: 0.0.1 
+  title: go-mysql swagger documentation 
+  description: '' 
+paths: 
+  /test:
+    get: 
+      tags: 
+        - Test
+      summary: Test method to check if API is live.
+      description: Metodo de prueba
+      operationId: test
+      responses: 
+        '200': 
+          description: success 
+          content: 
+            application/json: 
+              example:
+                Mensaje: "Metodo de prueba"
+
+  /cuadros/baja:
+    post:
+      tags:
+        - Cuadros
+      summary: changes status from active to inactive
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - IDPintor
+              properties: 
+                IDPintor:
+                  type: integer
+                  description: ID del pintor.
+              example:
+                IDPintor: 1
