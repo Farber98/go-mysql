@@ -7,5 +7,5 @@ import (
 )
 
 func Prueba(c echo.Context) error {
-	return c.JSON(http.StatusOK, struct{ Mensaje string }{"Metodo de prueba"})
+	return c.JSON(http.StatusOK, struct{ Mensaje string }{"Metodo de prueba para el loti"})
 }
