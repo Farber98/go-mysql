@@ -16,6 +16,8 @@ func initRouter(db *db.MySQLHandler) *echo.Echo {
 	r.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
 		Format: `[${time_rfc3339}] ${status} ${method} ${host} ${path} ${latency_human}` + "\n",
 	}))
+	//para Swagger
+	r.Use(middleware.CORS())
 	return r
 }
 

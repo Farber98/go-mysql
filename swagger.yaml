@@ -11,8 +11,6 @@ paths:
       tags: 
         - Test
       summary: Test method to check if API is live.
-      description: Metodo de prueba
-      operationId: test
       responses: 
         '200': 
           description: success 
@@ -21,10 +19,88 @@ paths:
               example:
                 Mensaje: "Metodo de prueba"
 
+  /cuadros/estado/{IDPintor}:
+    get: 
+      tags: 
+        - Painters
+      summary: given a painter, returns the status of all their paintings with offers.
+      parameters:
+        - in: path
+          name: IDPintor
+          description: Painter's ID.
+          required: true
+          example: 1
+          schema:
+            type: integer
+      responses:
+        '200': 
+          description: returns the status of all painter's paintings with offers
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    description: error message
+                    type: string
+                    example: null
+                  respuesta:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        Cuadro:
+                          description: Painting name.
+                          type: string
+                          example: Azul
+                        Precio: 
+                          description: Painting price.
+                          type: integer 
+                          example: 22000000
+                        Vendido:
+                          description: Sell status.
+                          type: string
+                          example: N
+                        Ganancia: 
+                          description: Painting gain if it's selled for the best proposal.
+                          type: integer 
+                          example: 2000000
+                        IDCuadro:
+                          description: Painting ID.
+                          type: integer 
+                          example: 3
+                        Propuesta: 
+                          description: Painting price proposal.
+                          type: integer 
+                          example: 24000000
+        '400':
+          description: given IDPintor doesn't exists.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    description: error message
+                    type: object
+                    properties: 
+                      codigo:
+                        description: error code
+                        type: string
+                        example: ERROR_PINTOR_INEXISTENTE
+                      mensaje:
+                        description: error message
+                        type: string
+                        example: El pintor no existe.
+                  respuesta:
+                    description: response with results
+                    type: string
+                    example: null
+
   /cuadros/baja:
     post:
       tags:
-        - Cuadros
+        - Paintings
       summary: changes status from active to inactive
       requestBody:
         required: true
@@ -37,6 +113,121 @@ paths:
               properties: 
                 IDPintor:
                   type: integer
-                  description: ID del pintor.
+                  description: Painter's ID.
               example:
                 IDPintor: 1
+      responses:
+          '200':
+            description: puts a painting to inactive and returns it.
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    error:
+                      description: error message
+                      type: string
+                      example: null
+                    respuesta:
+                      type: object
+                      properties:
+                        Cuadros:
+                          type: object
+                          properties:
+                            IDCuadro:
+                              description: Painting ID.
+                              type: integer 
+                              example: 14
+                            IDPintor:
+                              description: Painter ID.
+                              type: integer 
+                              example: 3 
+                            IDMetodo:
+                              description: Method ID. 
+                              type: integer
+                              example: 1
+                            Titulo:
+                              description: Painting name.
+                              type: string
+                              example: Puente sobre el Sena
+                            Fecha: 
+                              description: Painting date.
+                              type: string
+                              example: 1874-07-13
+                            Precio: 
+                              description: Painting price.
+                              type: integer 
+                              example: 0
+                            Estado:
+                              description: Painting status.
+                              type: integer
+                              example: B
+          # '400':
+          #   description: Error al dar de baja el cuadro.
+          #   content:
+          #     application/json:
+          #       schema:
+          #         type: object
+          #         properties:
+          #           error:
+          #             description: Mensaje de error
+          #             type: object
+          #             properties: 
+          #               codigo:
+          #                 description: Codigo del error
+          #                 type: string
+          #                 example: ERROR_CUADRO_INEXISTENTE
+          #               mensaje:
+          #                 description: Mensaje del error
+          #                 type: string
+          #                 example: El cuadro no existe.
+          #           respuesta:
+          #             description: respuesta con resultado
+          #             type: string
+          #             example: null
+          '400':
+            description: Error setting to inactive a painting.
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    error:
+                      description: error message
+                      type: object
+                      properties: 
+                        codigo:
+                          description: error code
+                          type: string
+                          example: ERROR_CUADRO_ESTA_BAJA
+                        mensaje:
+                          description: error message
+                          type: string
+                          example: El cuadro ya está dado de baja.
+                    respuesta:
+                      description: response with results
+                      type: string
+                      example: null
+          '422':
+            description: error processing request.
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    error:
+                      description: error message
+                      type: object
+                      properties: 
+                        codigo:
+                          description: error code
+                          type: string
+                          example: ERROR_DEFAULT
+                        mensaje:
+                          description: error message
+                          type: string
+                          example: Ha ocurrido un error mientras se procesaba su petición.
+                    respuesta:
+                      description: response with results
+                      type: string
+                      example: null
