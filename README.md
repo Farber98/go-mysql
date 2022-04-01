@@ -1,2 +1,2 @@
 # go-mysql
-Connecting go with MySQL with "MVC" structure and documenting with Swagger.
+Connecting go and MySQL with "MVC" structure and using Swagger for API documentation.
