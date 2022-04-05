@@ -1,2 +1,2 @@
 # go-mysql
-Connecting go and MySQL with "MVC" structure and following OpenAPI standard for API documentation using Swagger.
+Connecting go and MySQL with "MVC" structure following OpenAPI standard using Swagger. Dockerized.
