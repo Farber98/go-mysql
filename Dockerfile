@@ -9,4 +9,4 @@ WORKDIR /app
 COPY --from=builder /build/go-mysql /app/go-mysql
 EXPOSE 1323
 CMD ["/app/go-mysql"]
-
+# docker build . -t go-mysql
