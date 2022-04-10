@@ -1,12 +1,17 @@
-FROM golang:1.17.6-alpine
-LABEL Name=go-mysql Version=0.0.1 maintainer="Juan Farber <juanfarberjob@gmail.com>"
-WORKDIR /build
+#build stage
+FROM golang:1.17.6-alpine AS builder
+LABEL name=go-mysql Version=0.0.2 maintainer="Juan Farber <jfarberjob@gmail.com>"
+WORKDIR /go/src/app
+RUN apk add --no-cache git
 COPY . .
-RUN CGO_ENABLED=0 go build ./cmd/go-mysql
+RUN go get -d -v ./...
+RUN go install -v ./...
+
 #final stage
-FROM alpine:latest  
+FROM alpine:latest
+RUN apk --no-cache add ca-certificates
+COPY --from=builder /go/bin /app
+
 WORKDIR /app
-COPY --from=builder /build/go-mysql /app/go-mysql
+CMD ./go-mysql
 EXPOSE 1323
-CMD ["/app/go-mysql"]
-# docker build . -t go-mysql
